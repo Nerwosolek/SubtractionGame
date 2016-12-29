@@ -1,0 +1,43 @@
+img.ball {
+  margin: 5px;
+  height: 64px;
+  width: 64px;
+}
+
+img.ball96 {
+  margin: 5px;
+  height: 96px;
+  width: 96px;
+}
+
+.balls-row {
+  position: relative;
+  text-align: right;
+  max-width: 100%;
+}
+
+.again {
+  position: relative;
+  text-align: center;
+  max-width: 100%;
+}
+
+#gameStatus {
+  font-size: 32px;
+  color: #4E648E;
+  text-align: center;
+}
+
+#gameTitle {
+  font-size: 32px;
+  color: #202020;
+  text-align: center;
+}
+
+.jumbotron {
+  height: 150px;
+}
+
+body {
+  background-color: #f2f2f2;
+}

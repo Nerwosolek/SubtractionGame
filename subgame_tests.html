@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Subtraction: The Game</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="css/mystyles.css" type="text/css">
+  </head>
+  <body onload="prepareGame(document.getElementById('mainGameDiv'))">
+    <div class="game" id="mainGameDiv">
+      <header class="jumbotron">
+        <div class="container">
+          <div class="row row-header">
+            <div class="col-xs-2">
+
+            </div>
+            <div class="col-xs-9">
+                <h1>SUBTRACTION:<br/>The Game</h1>
+            </div>
+            <div class="col-xs-1">
+
+            </div>
+          </div>
+        </div>
+      </header>
+      <div class="container" id="startPanel">
+        <div class="row">
+          <div class="col-xs-2">
+
+          </div>
+          <div class="col-xs-8">
+            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="startGame(1)">START 1st</button>
+            <button type="button" class="btn btn-success btn-lg btn-block" onclick="startGame(0)">START 2nd</button>
+          </div>
+          <div class="col-xs-2">
+
+          </div>
+        </div>
+
+      </div>
+      <div class="container" id="gamePanel">
+        <div class="row">
+          <div class="col-xs-1" id="gameStatus">
+            game
+          </div>
+          <div class="col-xs-10" >
+            <div class="">
+
+            </div>
+            <div class="balls-row" id="balls-col">
+
+            </div>
+          </div>
+          <div class="col-xs-1">
+
+          </div>
+        </div>
+      </div>
+      <footer></footer>
+    </div>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="sub_tests.js"></script>
+  </body>
+</html>

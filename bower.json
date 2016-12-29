@@ -1,0 +1,25 @@
+{
+  "name": "subtraction_game",
+  "authors": [
+    "George <subtraction_game@gieorgijewski.pl>"
+  ],
+  "description": "Take balls, who takes last loses.",
+  "main": "subgame.html",
+  "keywords": [
+    "game",
+    "javascipt"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.0",
+    "bootstrap": "^3.3.7"
+  }
+}
