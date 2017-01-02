@@ -5,6 +5,7 @@ var startPanel;
 var statusPanel;
 var ballsNumber = 12;
 var currentBallsNumber = ballsNumber;
+var ballsMoveNbr = 2;
 var currentBalls;
 var bomb;
 var ballSrc = 'img/beach-ball-4.png';
@@ -59,6 +60,9 @@ function startGame(first) {
   }
   statusPanel = document.getElementById('gameStatus');
   startPanel = document.getElementById('startPanel');
+  ballsNumber = document.getElementById('totalBallsNbr').value;
+  currentBallsNumber = ballsNumber;
+  ballsMoveNbr = document.getElementById('ballsMoveNbr').value;
   game.removeChild(startPanel);
   gameBalls = document.getElementById('balls-col');
   currentBalls = new Array(ballsNumber);
