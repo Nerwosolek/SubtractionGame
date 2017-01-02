@@ -21,5 +21,5 @@ Plans for next version
 
 Development hints
 ===================
-1. after changing sub.js which is main java script file for the game, remember to update sub.min.js
+1. after changing sub.js which is main JavaScript file for the game, remember to update sub.min.js
   by minifying sub.js
