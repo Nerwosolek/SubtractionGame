@@ -16,34 +16,44 @@ var gameBalls;
 
 function bombMouseoutHandler() {
     currentBalls[currentBalls.length - 1].className = 'ball';
-    if (currentBalls.length == 2) currentBalls[0].src = ballSrc;
+    for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
+      currentBalls[i].src = ballSrc;
+    }
 }
 
 function bombMouseoverHandler() {
     currentBalls[currentBalls.length - 1].className = 'ball96';
-    if (currentBalls.length == 2) currentBalls[0].src = ballInvSrc;
+    for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
+      currentBalls[i].src = ballInvSrc;
+    }
 }
 
 function ballMouseoutHandler() {
+    var i = 0;
+    while (currentBalls[i] != this) {
+      currentBalls[i].src = ballSrc;
+      i = i + 1;
+    }
     this.src = ballSrc;
-    currentBalls[0].src = ballSrc;
-//    alert('mouse out!');
 }
 
 function ballMouseoverHandler() {
+    var i = 0;
+    while (currentBalls[i] != this) {
+      currentBalls[i].src = ballInvSrc;
+      i = i + 1;
+    }
     this.src = ballInvSrc;
-    currentBalls[0].src = ballInvSrc;
 }
 
 function ballClickHandler() {
   //if (currentBalls[0] == this) alert('I am 1st ball!');
   //if (currentBalls[1] == this) alert('I am 2nd ball!');
-  if (currentBalls[0] == this) {
-    chooseBalls(1);
+  var i = 0;
+  while (currentBalls[i] != this) {
+    i = i + 1;
   }
-  if (currentBalls[1] == this) {
-    chooseBalls(2);
-  }
+    chooseBalls(i+1);
 }
 
 function prepareGame(gameDiv, language) {
@@ -142,39 +152,29 @@ function playerMoves() {
       gameStatus.innerHTML = 'Twój ruch...';
       break;
   }
-  if (currentBalls.length == 2 || currentBalls.length == 1) {
-    currentBalls[currentBalls.length - 1].addEventListener('click', ballClickHandler);
-    currentBalls[currentBalls.length - 1].addEventListener('mouseover', bombMouseoverHandler);
-    currentBalls[currentBalls.length - 1].addEventListener('mouseout', bombMouseoutHandler);
-    if (currentBalls.length == 2) {
-      currentBalls[0].addEventListener('click', ballClickHandler);
-      currentBalls[0].addEventListener('mouseover', ballMouseoverHandler);
-      currentBalls[0].addEventListener('mouseout', ballMouseoutHandler);
+  for (var b = 0; b < Math.min(currentBalls.length, ballsMoveNbr); b = b + 1) {
+    if (b == currentBalls.length - 1) {
+      currentBalls[b].addEventListener('click', ballClickHandler);
+      currentBalls[b].addEventListener('mouseover', bombMouseoverHandler);
+      currentBalls[b].addEventListener('mouseout', bombMouseoutHandler);
     }
-  }
-  if (currentBalls.length > 2) {
-    currentBalls[0].addEventListener('click', ballClickHandler);
-    currentBalls[0].addEventListener('mouseover', ballMouseoverHandler);
-    currentBalls[0].addEventListener('mouseout', ballMouseoutHandler);
-    currentBalls[1].addEventListener('click', ballClickHandler);
-    currentBalls[1].addEventListener('mouseover', ballMouseoverHandler);
-    currentBalls[1].addEventListener('mouseout', ballMouseoutHandler);
+    else {
+      currentBalls[b].addEventListener('click', ballClickHandler);
+      currentBalls[b].addEventListener('mouseover', ballMouseoverHandler);
+      currentBalls[b].addEventListener('mouseout', ballMouseoutHandler);
+    }
   }
 }
 
 function chooseBalls(ballsTaken) {
-  currentBalls[0].removeEventListener('click', ballClickHandler);
-  currentBalls[0].removeEventListener('mouseover', ballMouseoverHandler);
-  currentBalls[0].removeEventListener('mouseout', ballMouseoutHandler);
-  if (currentBalls.length > 1) {
-    currentBalls[1].removeEventListener('click', ballClickHandler);
-    currentBalls[1].removeEventListener('mouseover', ballMouseoverHandler);
-    currentBalls[1].removeEventListener('mouseout', ballMouseoutHandler);
-  }
-  if (currentBalls.length == 2 || currentBalls.length == 1) {
-    currentBalls[currentBalls.length - 1].removeEventListener('mouseout', bombMouseoutHandler);
-  }
   for (var i = 0; i < ballsTaken ; i++) {
+    if (i == currentBalls.length - 1) {
+      currentBalls[i].removeEventListener('mouseout', bombMouseoutHandler);
+    } else {
+      currentBalls[i].removeEventListener('mouseover', ballMouseoverHandler);
+      currentBalls[i].removeEventListener('mouseout', ballMouseoutHandler);
+    }
+    currentBalls[i].removeEventListener('click', ballClickHandler);
     gameBalls.removeChild(currentBalls[i]);
   }
   currentBalls = currentBalls.slice(ballsTaken);
