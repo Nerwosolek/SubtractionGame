@@ -1,11 +1,13 @@
 # SubtractionGame
 This is a short puzzle game in JS.
-Version 1.0
+Version 2.0
 
 Rules
 ========
 Take one ball or two balls. Who takes the last ball looses.
 Play with computer and see if you can win when he starts or if you start.
+From version 2.0 you can choose with how many balls you start and how many balls
+each player can maximally take each turn.
 
 Starting game
 ===============
