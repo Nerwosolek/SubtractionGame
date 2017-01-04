@@ -16,8 +16,14 @@ Plans for next version
 =======================
 1. Add generalization of the game by introducing two parameters:
   - balls number
-  - max balls to take
+  - balls to take in 1 move
 2. Better internationalization (not with X different htmls)
+3. Checking if balls number is not < 3 and balls in 1 move < 1.
+	Others conditions OK (balls in 1 move could be > total balls number,
+	cause you cannot take more balls than you see on screen).
+4. In title DIV make and update info about:
+	a. remaining balls
+	b. balls currently highlighted
 
 Development hints
 ===================

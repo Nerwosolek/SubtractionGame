@@ -70,9 +70,9 @@ function startGame(first) {
   }
   statusPanel = document.getElementById('gameStatus');
   startPanel = document.getElementById('startPanel');
-  ballsNumber = document.getElementById('totalBallsNbr').value;
+  ballsNumber = Number(document.getElementById('totalBallsNbr').value);
   currentBallsNumber = ballsNumber;
-  ballsMoveNbr = document.getElementById('ballsMoveNbr').value;
+  ballsMoveNbr = Number(document.getElementById('ballsMoveNbr').value);
   game.removeChild(startPanel);
   gameBalls = document.getElementById('balls-col');
   currentBalls = new Array(ballsNumber);
@@ -192,22 +192,26 @@ function computerMoves() {
   }
   var   remainingBalls = currentBalls.length;
   if (remainingBalls > 1) {
-    var rem = remainingBalls % 3;
+    var rem = remainingBalls % (ballsMoveNbr+1);
     if (rem == 0) {
-      currentBalls[0].src = ballCmpSrc;
-      currentBalls[1].src = ballCmpSrc;
-      setTimeout( function() { chooseBalls(2); }, 1500);
+      for (var i = 0; i < ballsMoveNbr; i = i + 1) {
+        currentBalls[i].src = ballCmpSrc;
+      }
+      setTimeout( function() { chooseBalls(ballsMoveNbr); }, 1500);
     }
     if (rem == 1) {
-      var randMove = Math.floor(Math.random() * 2) + 1;
+      var randMove = Math.floor(Math.random() * ballsMoveNbr) + 1;
       //alert(randMove);
-      currentBalls[0].src = ballCmpSrc;
-      if (randMove > 1) currentBalls[1].src = ballCmpSrc;
+      for (var i = 0; i < randMove; i = i + 1) {
+        currentBalls[i].src = ballCmpSrc;
+      }
       setTimeout( function() { chooseBalls(randMove); }, 1500);
     }
-    if (rem == 2) {
-      currentBalls[0].src = ballCmpSrc;
-      setTimeout( function() { chooseBalls(1); }, 1500);
+    if (rem > 1) {
+      for (var i = 0; i < (rem - 1); i = i + 1) {
+        currentBalls[i].src = ballCmpSrc;
+      }
+      setTimeout( function() { chooseBalls(rem - 1); }, 1500);
     }
   } else if (remainingBalls == 1) {
     currentBalls[0].className = 'ball96';
