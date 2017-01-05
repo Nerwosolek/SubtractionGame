@@ -24,7 +24,7 @@ img.ball96 {
 
 #gameStatus {
   font-size: 32px;
-  color: #4E648E;
+  color: #938172;
   text-align: center;
 }
 
@@ -32,6 +32,20 @@ img.ball96 {
   font-size: 32px;
   color: #202020;
   text-align: center;
+}
+
+#gameStatusInfo {
+  font-size: 20px;
+  color: #626266;
+}
+
+#gameStatusChoice {
+  font-size: 20px;
+  color: #626266;
+}
+
+.statusSpan {
+  vertical-align: text-bottom;
 }
 
 .jumbotron {

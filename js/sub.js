@@ -68,7 +68,9 @@ function startGame(first) {
   } else {
     who_plays = 'p';
   }
-  statusPanel = document.getElementById('gameStatus');
+  vStatusPanelTitle = document.getElementById('gameStatusTitle');
+  vStatusPanelInfo = document.getElementById('gameStatusInfo');
+  vStatusPanelChoice = document.getElementById('gameStatusChoice');
   startPanel = document.getElementById('startPanel');
   ballsNumber = Number(document.getElementById('totalBallsNbr').value);
   currentBallsNumber = ballsNumber;
@@ -113,10 +115,14 @@ function endTurn() {
     if (currentBalls.length == 0) {
       switch (lang) {
         case "en":
-          gameStatus.innerHTML = 'You LOST!';
+          vStatusPanelTitle.innerHTML = 'You LOST!';
+          vStatusPanelInfo.innerHTML = '';
+          vStatusPanelChoice.innerHTML = '';
           break;
         default:
-          gameStatus.innerHTML = 'Przegrałeś!';
+          vStatusPanelTitle.innerHTML = 'Przegrałeś!';
+          vStatusPanelInfo.innerHTML = '';
+          vStatusPanelChoice.innerHTML = '';
           break;
       }
       endGame();
@@ -129,10 +135,14 @@ function endTurn() {
     if (currentBalls.length == 0) {
       switch (lang) {
         case "en":
-          gameStatus.innerHTML = 'You WON!';
+          vStatusPanelTitle.innerHTML = 'You WON!';
+          vStatusPanelInfo.innerHTML = '';
+          vStatusPanelChoice.innerHTML = '';
           break;
         default:
-          gameStatus.innerHTML = 'Wygrałeś!';
+          vStatusPanelTitle.innerHTML = 'Wygrałeś!';
+          vStatusPanelInfo.innerHTML = '';
+          vStatusPanelChoice.innerHTML = '';
           break;
       }
       endGame();
@@ -146,10 +156,12 @@ function endTurn() {
 function playerMoves() {
   switch (lang) {
     case "en":
-      gameStatus.innerHTML = "Your move...";
+      vStatusPanelTitle.innerHTML = "Your move...";
+      vStatusPanelInfo.innerHTML = '<span class=\"\">'+currentBalls.length+' balls left.</span>';
       break;
     default:
-      gameStatus.innerHTML = 'Twój ruch...';
+      vStatusPanelTitle.innerHTML = "Twój ruch...";
+      vStatusPanelInfo.innerHTML = '<span class=\"\">Zostało '+currentBalls.length+' piłeczek.</span>';
       break;
   }
   for (var b = 0; b < Math.min(currentBalls.length, ballsMoveNbr); b = b + 1) {
@@ -184,10 +196,12 @@ function chooseBalls(ballsTaken) {
 function computerMoves() {
   switch (lang) {
     case "en":
-      gameStatus.innerHTML = "Computer moves";
+      vStatusPanelTitle.innerHTML = "Computer moves";
+      vStatusPanelInfo.innerHTML = '<span class=\"\">'+currentBalls.length+' balls left.</span>';
       break;
     default:
-      gameStatus.innerHTML = 'Ruch komputera';
+      vStatusPanelTitle.innerHTML = 'Ruch komputera';
+      vStatusPanelInfo.innerHTML = '<span class=\"statusSpan\">Zostało '+currentBalls.length+' piłeczek.</span>';
       break;
   }
   var   remainingBalls = currentBalls.length;
@@ -197,6 +211,7 @@ function computerMoves() {
       for (var i = 0; i < ballsMoveNbr; i = i + 1) {
         currentBalls[i].src = ballCmpSrc;
       }
+      vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+ballsMoveNbr+' piłeczek.</span>';
       setTimeout( function() { chooseBalls(ballsMoveNbr); }, 1500);
     }
     if (rem == 1) {
@@ -205,17 +220,20 @@ function computerMoves() {
       for (var i = 0; i < randMove; i = i + 1) {
         currentBalls[i].src = ballCmpSrc;
       }
+      vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+randMove+' piłeczek.</span>';
       setTimeout( function() { chooseBalls(randMove); }, 1500);
     }
     if (rem > 1) {
       for (var i = 0; i < (rem - 1); i = i + 1) {
         currentBalls[i].src = ballCmpSrc;
       }
+      vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+(rem - 1)+' piłeczek.</span>';
       setTimeout( function() { chooseBalls(rem - 1); }, 1500);
     }
   } else if (remainingBalls == 1) {
     currentBalls[0].className = 'ball96';
     //currentBalls[0].height = 96;
+    vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+1+' piłeczek.</span>';
     setTimeout( function() { chooseBalls(1); }, 1500);
   }
   //alert(currentBalls[0].mouseout);
@@ -248,6 +266,9 @@ function resetGame() {
 
   gameBalls.innerHTML = "";
   game.appendChild(startPanel);
-  gameStatus.innerHTML = gameTitle;
+  // gameStatus.innerHTML = gameTitle;
+  vStatusPanelTitle.innerHTML = gameTitle;
+  vStatusPanelInfo.innerHTML = '';
+  vStatusPanelChoice.innerHTML = '';
   gameBalls.className = "balls-row col-xs-12"
 }
