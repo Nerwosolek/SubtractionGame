@@ -19,6 +19,7 @@ function bombMouseoutHandler() {
     for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
       currentBalls[i].src = ballSrc;
     }
+    updatePanelChoice(0);
 }
 
 function bombMouseoverHandler() {
@@ -26,6 +27,7 @@ function bombMouseoverHandler() {
     for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
       currentBalls[i].src = ballInvSrc;
     }
+    updatePanelChoice(currentBalls.length);
 }
 
 function ballMouseoutHandler() {
@@ -35,6 +37,7 @@ function ballMouseoutHandler() {
       i = i + 1;
     }
     this.src = ballSrc;
+    updatePanelChoice(0);
 }
 
 function ballMouseoverHandler() {
@@ -44,6 +47,7 @@ function ballMouseoverHandler() {
       i = i + 1;
     }
     this.src = ballInvSrc;
+    updatePanelChoice(i+1);
 }
 
 function ballClickHandler() {
@@ -116,15 +120,13 @@ function endTurn() {
       switch (lang) {
         case "en":
           vStatusPanelTitle.innerHTML = 'You LOST!';
-          vStatusPanelInfo.innerHTML = '';
-          vStatusPanelChoice.innerHTML = '';
           break;
         default:
           vStatusPanelTitle.innerHTML = 'Przegrałeś!';
-          vStatusPanelInfo.innerHTML = '';
-          vStatusPanelChoice.innerHTML = '';
           break;
       }
+      updatePanelInfo();
+      updatePanelChoice();
       endGame();
       return;
     }
@@ -136,15 +138,13 @@ function endTurn() {
       switch (lang) {
         case "en":
           vStatusPanelTitle.innerHTML = 'You WON!';
-          vStatusPanelInfo.innerHTML = '';
-          vStatusPanelChoice.innerHTML = '';
           break;
         default:
           vStatusPanelTitle.innerHTML = 'Wygrałeś!';
-          vStatusPanelInfo.innerHTML = '';
-          vStatusPanelChoice.innerHTML = '';
           break;
       }
+      updatePanelInfo();
+      updatePanelChoice();
       endGame();
       return;
     }
@@ -154,14 +154,14 @@ function endTurn() {
 }
 
 function playerMoves() {
+  updatePanelChoice(0);
+  updatePanelInfo(currentBalls.length);
   switch (lang) {
     case "en":
       vStatusPanelTitle.innerHTML = "Your move...";
-      vStatusPanelInfo.innerHTML = '<span class=\"\">'+currentBalls.length+' balls left.</span>';
       break;
     default:
       vStatusPanelTitle.innerHTML = "Twój ruch...";
-      vStatusPanelInfo.innerHTML = '<span class=\"\">Zostało '+currentBalls.length+' piłeczek.</span>';
       break;
   }
   for (var b = 0; b < Math.min(currentBalls.length, ballsMoveNbr); b = b + 1) {
@@ -197,13 +197,12 @@ function computerMoves() {
   switch (lang) {
     case "en":
       vStatusPanelTitle.innerHTML = "Computer moves";
-      vStatusPanelInfo.innerHTML = '<span class=\"\">'+currentBalls.length+' balls left.</span>';
       break;
     default:
       vStatusPanelTitle.innerHTML = 'Ruch komputera';
-      vStatusPanelInfo.innerHTML = '<span class=\"statusSpan\">Zostało '+currentBalls.length+' piłeczek.</span>';
       break;
   }
+  updatePanelInfo(currentBalls.length);
   var   remainingBalls = currentBalls.length;
   if (remainingBalls > 1) {
     var rem = remainingBalls % (ballsMoveNbr+1);
@@ -211,7 +210,7 @@ function computerMoves() {
       for (var i = 0; i < ballsMoveNbr; i = i + 1) {
         currentBalls[i].src = ballCmpSrc;
       }
-      vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+ballsMoveNbr+' piłeczek.</span>';
+      updatePanelChoice(ballsMoveNbr);
       setTimeout( function() { chooseBalls(ballsMoveNbr); }, 1500);
     }
     if (rem == 1) {
@@ -220,20 +219,20 @@ function computerMoves() {
       for (var i = 0; i < randMove; i = i + 1) {
         currentBalls[i].src = ballCmpSrc;
       }
-      vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+randMove+' piłeczek.</span>';
+      updatePanelChoice(randMove);
       setTimeout( function() { chooseBalls(randMove); }, 1500);
     }
     if (rem > 1) {
       for (var i = 0; i < (rem - 1); i = i + 1) {
         currentBalls[i].src = ballCmpSrc;
       }
-      vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+(rem - 1)+' piłeczek.</span>';
+      updatePanelChoice(rem-1);
       setTimeout( function() { chooseBalls(rem - 1); }, 1500);
     }
   } else if (remainingBalls == 1) {
     currentBalls[0].className = 'ball96';
     //currentBalls[0].height = 96;
-    vStatusPanelChoice.innerHTML = '<span class=\"\">Zaznaczyłeś '+1+' piłeczek.</span>';
+    updatePanelChoice(1);
     setTimeout( function() { chooseBalls(1); }, 1500);
   }
   //alert(currentBalls[0].mouseout);
@@ -269,6 +268,57 @@ function resetGame() {
   // gameStatus.innerHTML = gameTitle;
   vStatusPanelTitle.innerHTML = gameTitle;
   vStatusPanelInfo.innerHTML = '';
-  vStatusPanelChoice.innerHTML = '';
+  updatePanelChoice();
   gameBalls.className = "balls-row col-xs-12"
+}
+
+function updatePanelChoice(nbr) {
+  if (nbr != undefined) {
+    switch (lang) {
+      case "en":
+        if (nbr == 1) {
+          vStatusPanelChoice.innerHTML = nbr+' ball highlighted.';
+        } else {
+          vStatusPanelChoice.innerHTML = nbr+' balls highlighted.';
+        }
+        break;
+      default:
+        if (nbr == 1) {
+          vStatusPanelChoice.innerHTML = 'Zaznaczyłeś '+nbr+' piłeczkę.';
+        } else if (nbr > 1 && nbr < 5) {
+          vStatusPanelChoice.innerHTML = 'Zaznaczyłeś '+nbr+' piłeczki.';
+        } else {
+          vStatusPanelChoice.innerHTML = 'Zaznaczyłeś '+nbr+' piłeczek.';
+        }
+        break;
+    }
+
+  } else {
+    vStatusPanelChoice.innerHTML = '';
+  }
+}
+
+function updatePanelInfo(nbr) {
+  if (nbr != undefined) {
+    switch(lang) {
+      case "en":
+        if (nbr == 1) {
+          vStatusPanelInfo.innerHTML = nbr + ' ball left';
+        } else {
+          vStatusPanelInfo.innerHTML = nbr + ' balls left';
+        }
+        break;
+      default:
+        if (nbr == 1) {
+          vStatusPanelInfo.innerHTML = 'Została '+nbr+' piłeczka.';
+        } else if (nbr > 1 && nbr < 5) {
+          vStatusPanelInfo.innerHTML = 'Zostały '+nbr+' piłeczki.';
+        } else {
+          vStatusPanelInfo.innerHTML = 'Zostało '+nbr+' piłeczek.';
+        }
+        break;
+    }
+  } else {
+    vStatusPanelInfo.innerHTML = '';
+  }
 }
