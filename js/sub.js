@@ -1,79 +1,78 @@
-var game;
-var lang = "pl";
-var who_plays; // c - computer, p - player
-var startPanel;
-var statusPanel;
-var ballsNumber = 12;
-var currentBallsNumber = ballsNumber;
-var ballsMoveNbr = 2;
-var currentBalls;
-var bomb;
-var ballSrc = 'img/beach-ball-4.png';
-var ballInvSrc = 'img/beach-ball-4inv.png';
-var ballCmpSrc = 'img/beach-ball-4cmp.png';
-var bombSrc = 'img/bomb.png';
-var gameBalls;
+var game
+var lang = 'pl'
+var who_plays // c - computer, p - player
+var startPanel
+var statusPanel
+var ballsNumber = 12
+var ballsMoveNbr = 2
+var currentBalls
+var bomb
+var ballSrc = 'img/beach-ball-4.png'
+var ballInvSrc = 'img/beach-ball-4inv.png'
+var ballCmpSrc = 'img/beach-ball-4cmp.png'
+var bombSrc = 'img/bomb.png'
+var gameBalls
 
-function bombMouseoutHandler() {
-    currentBalls[currentBalls.length - 1].className = 'ball';
+function bombMouseoutHandler () {
+  currentBalls[currentBalls.length - 1].className = 'ball'
+  for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
+    currentBalls[i].src = ballSrc
+  }
+  updatePanelChoice(0)
+}
+
+function bombMouseoverHandler () {
+    currentBalls[currentBalls.length - 1].className = 'ball96'
     for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
-      currentBalls[i].src = ballSrc;
+      currentBalls[i].src = ballInvSrc
     }
-    updatePanelChoice(0);
+    updatePanelChoice(currentBalls.length)
 }
 
-function bombMouseoverHandler() {
-    currentBalls[currentBalls.length - 1].className = 'ball96';
-    for (var i = 0; i < currentBalls.length - 1; i = i + 1) {
-      currentBalls[i].src = ballInvSrc;
-    }
-    updatePanelChoice(currentBalls.length);
-}
-
-function ballMouseoutHandler() {
-    var i = 0;
+function ballMouseoutHandler () {
+    var i = 0
     while (currentBalls[i] != this) {
-      currentBalls[i].src = ballSrc;
-      i = i + 1;
+      currentBalls[i].src = ballSrc
+      i = i + 1
     }
-    this.src = ballSrc;
-    updatePanelChoice(0);
+    this.src = ballSrc
+    updatePanelChoice(0)
 }
 
-function ballMouseoverHandler() {
-    var i = 0;
+function ballMouseoverHandler () {
+    var i = 0
     while (currentBalls[i] != this) {
-      currentBalls[i].src = ballInvSrc;
-      i = i + 1;
+      currentBalls[i].src = ballInvSrc
+      i = i + 1
     }
-    this.src = ballInvSrc;
-    updatePanelChoice(i+1);
+    this.src = ballInvSrc
+    updatePanelChoice(i+1)
 }
 
-function ballClickHandler() {
+function ballClickHandler () {
   //if (currentBalls[0] == this) alert('I am 1st ball!');
   //if (currentBalls[1] == this) alert('I am 2nd ball!');
-  var i = 0;
+  var i = 0
   while (currentBalls[i] != this) {
-    i = i + 1;
+    i = i + 1
   }
-    chooseBalls(i+1);
+    chooseBalls(i + 1)
 }
 
-function prepareGame(gameDiv, language) {
-  game = gameDiv;
-  lang = language;
+function prepareGame (gameDiv, language) {
+  game = gameDiv
+  lang = language
   //alert(game.id);
 }
 
-function startGame(first) {
-  if (first == 0) {
-    who_plays = 'c';
+function startGame (first) {
+  if (first === 0) {
+    who_plays = 'c'
   } else {
-    who_plays = 'p';
+    who_plays = 'p'
   }
-  vStatusPanelTitle = document.getElementById('gameStatusTitle');
-  vStatusPanelInfo = document.getElementById('gameStatusInfo');
+  vStatusPanelTitle = document.getElementById('gameStatusTitle')
+  vStatusPanelInfo = document.getElementById('gameStatusInfo')
   vStatusPanelChoice = document.getElementById('gameStatusChoice');
   startPanel = document.getElementById('startPanel');
   ballsNumber = Number(document.getElementById('totalBallsNbr').value);
